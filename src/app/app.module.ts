@@ -4,20 +4,27 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { AboutPage } from '../pages/about/about';
+import { NetworkPage } from '../pages/network/network';
+import { IntroPage } from '../pages/intro/intro';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+import { Geolocation }  from '@ionic-native/geolocation';
+import { Network } from '@ionic-native/network'
  
-let config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+let config: SocketIoConfig = { url: 'https://shuttle-tracker-api.herokuapp.com', options: {} };
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    NetworkPage,
+    AboutPage,
+    IntroPage
   ],
   imports: [
     BrowserModule,
@@ -28,12 +35,16 @@ let config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    NetworkPage,
+    AboutPage,
+    IntroPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    Geolocation,
+    Network
   ]
 })
 export class AppModule {}
