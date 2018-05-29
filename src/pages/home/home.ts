@@ -140,6 +140,7 @@ export class HomePage {
 		}
 
 		this.showMapRoute();
+		this.showBusStopMarkers();
 	}
 
 	//a method to update the location of buses
@@ -153,6 +154,7 @@ export class HomePage {
 			this.addBusMarker(location, busName);
 		}
 		this.showMapRoute();
+		this.showBusStopMarkers();
 	}
 
 	//a method to add bus markers to the map
@@ -161,7 +163,8 @@ export class HomePage {
 			position: location,
 			map: this.map,
 			icon: SHUTTLE_CONFIG.BUS_ICON,
-			label: label
+			label: label,
+			zIndex: 200
 		});
 		var latitude = this.getLatitude();
 		var longitude = this.getLongitude();
@@ -400,6 +403,21 @@ export class HomePage {
 			]
 		});
 		actionSheet.present();
+	}
+
+	showBusStopMarkers() {
+		for (var coord in SHUTTLE_CONFIG.TERMINAL_COORDINATES) {
+			let coordinate = SHUTTLE_CONFIG.TERMINAL_COORDINATES[coord];
+			var { LAT, LON } = coordinate;
+
+			const location = new google.maps.LatLng(LAT, LON);
+			
+			let marker = new google.maps.Marker({
+				position: location,
+				map: this.map,
+				icon: SHUTTLE_CONFIG.BUS_STOP_ICON,
+			});
+		}
 	}
 
 	getCoordinateUpdates() {
