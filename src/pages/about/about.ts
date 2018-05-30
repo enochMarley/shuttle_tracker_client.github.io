@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { SHUTTLE_CONFIG } from './../../app/shuttle.config';
 
-/**
- * Generated class for the AboutPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -14,12 +9,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'about.html',
 })
 export class AboutPage {
+	busImg;
+	userImg;
+	busStopImg;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+	constructor(public navCtrl: NavController, public navParams: NavParams) {
+		this.busImg = SHUTTLE_CONFIG.BUS_ICON;
+		this.userImg = SHUTTLE_CONFIG.USER_ICON;
+		this.busStopImg = SHUTTLE_CONFIG.BUS_STOP_ICON;
+	}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AboutPage');
-  }
+	ionViewDidLoad() {
+	    console.log('ionViewDidLoad AboutPage');
+	}
 
 }

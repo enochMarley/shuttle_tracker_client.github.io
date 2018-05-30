@@ -7,12 +7,62 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>About</ion-title>
+    <ion-title>User Manual</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-	
+	<h5><b>Keys</b></h5>
+	<ion-grid>
+		<ion-row>
+		    <ion-col col-3>
+		    	<p><b>Icon</b></p>
+		    </ion-col>
+		    <ion-col col-9>
+		    	<p><b>Meaning</b></p>
+		    </ion-col>
+		</ion-row>
+
+		<ion-row>
+		    <ion-col col-3>
+		    	<img [src]="busImg" class="user-manual-img">
+		    </ion-col>
+		    <ion-col col-9>
+		    	<p>Bus</p>
+		    </ion-col>
+		</ion-row>
+
+		<ion-row>
+		    <ion-col col-3>
+		    	<img [src]="userImg" class="user-manual-img">
+		    </ion-col>
+		    <ion-col col-9>
+		    	<p>Your Current Location</p>
+		    </ion-col>
+		</ion-row>
+
+		<ion-row>
+		    <ion-col col-3>
+		    	<img [src]="busStopImg" class="user-manual-img">
+		    </ion-col>
+		    <ion-col col-9>
+		    	<p>Bus Stop Locations</p>
+		    </ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<hr>
+
+	<h5><b>Howtos</b></h5>
+
+	<p><b>See Your Current Location</b></p>
+	<p>Enable your GPS in your phone's settings, and allow the application to access your location on request.</p><br>
+
+	<p><b>View Buses At Bus Stop</b></p>
+	<p>Click the 'Bus Stops' button on the top right section of the map. Select your preferred bus stop from the list of options.</p><br>
+
+	<p><b>Get Travel Details of a Particular Bus</b></p>
+	<p>Click the icon of the bus who's details you want to get. A response will be returned. It might not respond if you don't have good internet connection</p>
 </ion-content>

@@ -1,11 +1,12 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, Platform, ActionSheetController, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, Platform, ActionSheetController, AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { Socket } from 'ng-socket-io';
 import { Observable } from 'rxjs/Observable';
 import { Geolocation }  from '@ionic-native/geolocation';
 import { Network } from '@ionic-native/network'
 
 import { NetworkPage } from './../network/network';
+import { AboutPage } from './../about/about';
 import { SHUTTLE_CONFIG } from './../../app/shuttle.config';
 
 declare var google: any;
@@ -25,7 +26,7 @@ export class HomePage {
 	markers = [];
 	radiusCircle:any;
 
-  	constructor(public navCtrl: NavController,private actionSheetCtrl: ActionSheetController, public socket: Socket, private geolocation: Geolocation, private platform: Platform, private network:Network, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {}
+  	constructor(public navCtrl: NavController,private actionSheetCtrl: ActionSheetController, public socket: Socket, private geolocation: Geolocation, private platform: Platform, private network:Network, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public toastCtrl: ToastController) {}
 
   	setLatitude(latitude:any) {
   		this.latitude = latitude;
@@ -81,12 +82,7 @@ export class HomePage {
 				this.setLongitude(this.longitude);
 				this.showBusesLocations(this.latitude, this.longitude,this.coordinates);
 			}).catch(error => {
-				let alert = this.alertCtrl.create({
-				      title: "Could Not Get Your Current Location",
-				      subTitle: "Please check your internet connection or make sure your GPS is enabled to get your location",
-				      buttons: ['OK']
-			    });
-			    alert.present();
+				this.showToastMessage('Your current location could not be updated. Please check your internet connection.');
 			    this.showBusesLocations(SHUTTLE_CONFIG.USER_DEFAULT_COORDINATES.LAT, SHUTTLE_CONFIG.USER_DEFAULT_COORDINATES.LON,this.coordinates);
 			})
 
@@ -119,6 +115,8 @@ export class HomePage {
 			center: this.mapCenter,
 			zoom: this.getMapZoomLevel(),
 			streetViewControl: false,
+			mapTypeControl:false,
+			scaleControl: false,
 			mapTypeId: 'roadmap',
 		}
 
@@ -128,7 +126,6 @@ export class HomePage {
 			position: this.mapCenter,
 			map: this.map,
 			icon: SHUTTLE_CONFIG.USER_ICON
-
 		});
 
 		for (var coord in coordinates) {
@@ -405,6 +402,10 @@ export class HomePage {
 		actionSheet.present();
 	}
 
+	showUserManual() {
+		this.navCtrl.push(AboutPage)
+	}
+
 	showBusStopMarkers() {
 		for (var coord in SHUTTLE_CONFIG.TERMINAL_COORDINATES) {
 			let coordinate = SHUTTLE_CONFIG.TERMINAL_COORDINATES[coord];
@@ -418,6 +419,15 @@ export class HomePage {
 				icon: SHUTTLE_CONFIG.BUS_STOP_ICON,
 			});
 		}
+	}
+
+	showToastMessage(message) {
+		let toast = this.toastCtrl.create({
+		    message: message,
+		    duration: 3000,
+		    position: 'top'
+	    });
+	    toast.present();
 	}
 
 	getCoordinateUpdates() {
